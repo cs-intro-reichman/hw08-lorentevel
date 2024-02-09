@@ -140,7 +140,7 @@ class PlayList {
             if (title.length() == tracks[i].getTitle().length()){
                 if (stringEquals(title.toLowerCase(), tracks[i].getTitle().toLowerCase())){
                     for (int j = i; j < size -1; j++){
-                        tracks[j] = tracks[j - 1];
+                        tracks[j] = tracks[j + 1];
                     }
                     size --;
                     return;
@@ -151,14 +151,28 @@ class PlayList {
 
     /** Removes the first track from this list. If the list is empty, does nothing. */
     public void removeFirst() {
-        //// replace this comment with your code
-    }
+        if (size == 0){
+            return;
+        }
+        for (int i = 1; i < size; i++){
+            tracks[i] = tracks[i -1];
+            }
+            size--;
+   }
+    
     
     /** Adds all the tracks in the other list to the end of this list. 
      *  If the total size of both lists is too large, does nothing. */
     //// An elegant and terribly inefficient implementation.
      public void add(PlayList other) {
-        //// replace this comment with your code
+        if (other.getSize() + size > maxSize){
+            return;
+        }
+        for (int i = 0; i < other.getSize(); i++){
+            Track tracktoAdd = other.getTrack(i);
+            tracks[size] = tracktoAdd;
+            size++;
+        }
     }
 
     /** Returns the index in this list of the track that has the shortest duration,
