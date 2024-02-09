@@ -48,6 +48,7 @@ class PlayList {
     //// For an efficient implementation, use StringBuilder.
     public String toString() {
         StringBuilder tracklist = new StringBuilder();
+        tracklist.append("\n");
         for (int i = 0; i < size; i++){
             tracklist.append(tracks[i].toString());
             tracklist.append("\n");
@@ -58,23 +59,23 @@ class PlayList {
     /** Removes the last track from this list. If the list is empty, does nothing. */
      public void removeLast() {
         if (size > 0){
-            //Track[] newTracks = new Track[maxSize];
-            //for (int i = 0; i < size; i++){
-              //  newTracks[i]=tracks[i];
-            //}
-            //tracks = newTracks;
+            Track[] newTracks = new Track[maxSize];
+            for (int i = 0; i < size; i++){
+               newTracks[i]=tracks[i];
+            }
+            this.tracks = newTracks;
             size--;
         }
     }
     
     /** Returns the total duration (in seconds) of all the tracks in this list.*/
     public int totalDuration() {
-        int totalDuration = 0;
+        int totalDur = 0;
         for (int i = 0; i < size; i++){
-            totalDuration += tracks[i].getDuration();
+            totalDur += tracks[i].getDuration();
 
         }
-        return totalDuration;
+        return totalDur;
     }
 
     /** Returns the index of the track with the given title in this list.
@@ -122,15 +123,11 @@ class PlayList {
      *  If the list is empty, or the given index is negative or too big for this list, 
      *  does nothing and returns -1. */
     public void remove(int i) {
-        //if (i < 0 || i >= size){
-          //  return;
-        //}
-        if (i >= 0 && i < size){
-        for (int j = i; j < size -1; j++){
-            tracks[j] = tracks[j-1];
-
-        }
-        size--;
+        if (i >= 0 && i < maxSize && size != 0){
+            for (int j = i; j < size -1; j++){
+                tracks[j] = tracks[j+1];
+            }
+            removeLast();
         }
     }
 
@@ -138,29 +135,28 @@ class PlayList {
      *  If such a track is not found, or the list is empty, or the given index
      *  is negative or too big for this list, does nothing. */
     public void remove(String title) {
-        for (int i = 0; i < size; i++){
-            if (title.length() == tracks[i].getTitle().length()){
-                if (stringEquals(title.toLowerCase(), tracks[i].getTitle().toLowerCase())){
-                    for (int j = i; j < size -1; j++){
-                        tracks[j] = tracks[j + 1];
-                    }
-                    size --;
-                    return;
-                    }
+        if (size != 0 ){
+            int removeIndx = indexOf(title);
+            if (removeIndx != -1){
+                for (int j = removeIndx; j < size - 1; j++){
+                    tracks[j] = tracks[j+1];
                 }
-            } 
+                removeLast();
+            }
+            
+        }
+        
     }
 
     /** Removes the first track from this list. If the list is empty, does nothing. */
     public void removeFirst() {
-        if (size == 0){
-            return;
-        }
-        for (int i = 1; i < size; i++){
-            tracks[i] = tracks[i -1];
+        if (size != 0 ){
+            for (int j = 0; j < size-1; j++){
+                tracks[j] = tracks[j+1];
             }
-            size--;
-   }
+            removeLast();
+        }
+    }
     
     
     /** Adds all the tracks in the other list to the end of this list. 
