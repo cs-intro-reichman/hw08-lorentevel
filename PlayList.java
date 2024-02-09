@@ -58,11 +58,11 @@ class PlayList {
     /** Removes the last track from this list. If the list is empty, does nothing. */
      public void removeLast() {
         if (size > 0){
-            Track[] newTracks = new Track[maxSize];
-            for (int i = 0; i < size; i++){
-                newTracks[i]=tracks[i];
-            }
-            tracks = newTracks;
+            //Track[] newTracks = new Track[maxSize];
+            //for (int i = 0; i < size; i++){
+              //  newTracks[i]=tracks[i];
+            //}
+            //tracks = newTracks;
             size--;
         }
     }
@@ -122,14 +122,16 @@ class PlayList {
      *  If the list is empty, or the given index is negative or too big for this list, 
      *  does nothing and returns -1. */
     public void remove(int i) {
-        if (i < 0 || i >= size){
-            return;
-        }
+        //if (i < 0 || i >= size){
+          //  return;
+        //}
+        if (i >= 0 && i < size){
         for (int j = i; j < size -1; j++){
             tracks[j] = tracks[j-1];
 
         }
         size--;
+        }
     }
 
     /** Removes the first track that has the given title from this list.
@@ -165,12 +167,11 @@ class PlayList {
      *  If the total size of both lists is too large, does nothing. */
     //// An elegant and terribly inefficient implementation.
      public void add(PlayList other) {
-        if (other.getSize() + size > maxSize){
+        if (other.getSize() + this.size > this.maxSize){
             return;
         }
         for (int i = 0; i < other.getSize(); i++){
-            Track tracktoAdd = other.getTrack(i);
-            tracks[size] = tracktoAdd;
+            this.tracks[size] = other.getTrack(i);
             size++;
         }
     }
