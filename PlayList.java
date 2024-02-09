@@ -62,7 +62,7 @@ class PlayList {
             for (int i = 0; i < size; i++){
                 newTracks[i]=tracks[i];
             }
-            tracks =  newTracks;
+            tracks = newTracks;
             size--;
         }
     }
@@ -182,8 +182,16 @@ class PlayList {
      *  If start is negative or greater than size - 1, returns -1.
      */
     private int minIndex(int start) {
-        //// replace the following statement with your code
-        return 0;
+        int minIndex = start;
+        if (start < 0 || start > size -1){
+            return -1;
+        }
+        for (int i = start; i < size; i++){
+            if (tracks[i].getDuration() <= tracks [minIndex].getDuration()){
+                minIndex = i;
+            }
+        }
+        return minIndex;
     }
 
     /** Returns the title of the shortest track in this list. 
